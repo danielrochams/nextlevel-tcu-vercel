@@ -22,10 +22,7 @@ export default async function handler(req, res) {
       url.searchParams.set("quantidade", String(PAGE_SIZE));
 
       const resp = await fetch(url.toString());
-      if (!resp.ok) {
-        attempts++;
-        continue;
-      }
+      if (!resp.ok) { attempts++; continue; }
 
       const data = await resp.json();
       if (!Array.isArray(data) || data.length === 0) break;
