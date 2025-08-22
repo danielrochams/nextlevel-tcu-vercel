@@ -13,9 +13,7 @@ export default async function handler(req, res) {
       return res.status(400).json({ ok: false, reason: "Parâmetros obrigatórios: numero e ano" });
     }
 
-    let inicio = 0;
-    let attempts = 0;
-
+    let inicio = 0, attempts = 0;
     while (attempts < MAX_PAGES) {
       const url = new URL(TCU_ENDPOINT);
       url.searchParams.set("inicio", String(inicio));
@@ -52,14 +50,11 @@ export default async function handler(req, res) {
           return res.status(200).json(hit);
         }
       }
-
       inicio += PAGE_SIZE;
       attempts += 1;
     }
-
     return res.status(200).json({ ok: false, reason: "Acórdão não localizado no TCU", numero, ano });
   } catch (err) {
     return res.status(500).json({ ok: false, reason: "Erro interno", error: String(err) });
   }
 }
-
